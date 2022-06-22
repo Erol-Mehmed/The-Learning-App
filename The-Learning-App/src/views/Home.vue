@@ -45,7 +45,7 @@
 
 </template>
 
-<style>
+<style scoped>
 @import '../assets/base.css';
 
 body {
@@ -54,6 +54,7 @@ body {
     "header"
     "main"
     "footer";
+    margin: 0;
 }
 
 header {
@@ -74,7 +75,6 @@ main {
 }
 
 main p {
-  margin-top: 50px;
   text-align: center;
   width: 50%;
 }
@@ -95,7 +95,9 @@ footer {
 }
 
 .links:hover {
- background-color: crimson;
+ background-color: yellow;
+ border-radius: 8px;
+ 
 }
 
 </style>

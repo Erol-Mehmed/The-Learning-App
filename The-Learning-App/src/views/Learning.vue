@@ -19,14 +19,107 @@
 
 
 
-<script>
-    
-</script>
 
-<template>
-    <h1>Helloooooo</h1>
+
+ <template>
+    
+     <body>
+        
+        <header>
+            <h2>Welcome</h2>
+            <img src="../components/icons/User-Icon-PNG.png" alt="">
+            
+        </header>
+
+        <main>
+            <table>
+                <tr>
+                   <th>ID</th>
+                   <th>Course Name</th>
+                   <th>Description</th>
+                   <th>Lessons(count)</th>
+                   <th>State</th>
+                   <th>Date added</th>
+                   <th>Image</th>
+                </tr>
+             
+            </table>
+        </main>
+
+        <footer>
+            <router-link class="links" to="/">Home</router-link>
+            <router-link class="links" to="/learning">Learning</router-link>
+        </footer>
+
+    </body>
+
 </template>
 
-<style>
+<style scoped>
+@import '../assets/base.css';
+
+    body {
+        display: grid;
+        grid-template-areas: 
+            "header"
+            "main"
+            "footer";
+            margin: 0;
+    }
+
+    table, tr {
+        border: solid black 2px;
+    }
+
+    th {
+        border-right: solid black 2px;
+        border-bottom: solid black 2px;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: cadetblue;
+        height: 70px;
+        width: 100%;
+    }
+
+    header h2 {
+        margin-left: 20px;
+    }
+
+    img {
+        width: 3.5%;
+        height: 70%;
+        border: solid black 2px;
+        border-radius: 5px;
+        margin-right: 20px;
+    }
+
+footer {
+  background-color: cadetblue;
+  grid-area: footer;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.links {
+  text-decoration: none;
+  color: black;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.links:hover {
+ background-color: yellow;
+ border-radius: 8px;
+ 
+}
 
 </style>
