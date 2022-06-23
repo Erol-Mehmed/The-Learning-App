@@ -24,18 +24,50 @@
 export default ({
     data () {
         return {
-
-            items: [1, 2, 5, 12, 'hello', 'hello'],
-            name: 'Erol',
+            courseInformation: [],
+            currentCourseObject: {id: 1, courseName: '', description: '', lessons: 0, },
+            idCounter: 1,
         }
-            
     },
 
     methods: {
-        greet(event) {
+        add(event) {
+            let isNumber = new RegExp('^[0-9]+$');
+            let courseName = '';
+            let description = '';
+            let lessons = '';
+
+
+            while (!courseName) {
+                 courseName = prompt('Add Course Name (required field)?');
+                 if (courseName !== '' && courseName !== null) {
+                    this.courseInformation.push(courseName);
+                 } else if (courseName === null) {
+                    return;
+                 }
+            }
+
+                description = prompt('Description?');
+
+            while (!lessons || !isNumber.test(lessons)) {
+                 lessons = prompt('Add Lessons(count) (required field and must be a number)?');
+                 if (lessons !== '' && lessons !== null && isNumber.test(lessons)) {
+                    this.courseInformation.push(lessons);
+                 } else if (lessons === null) {
+                    return;
+                 }
+            }
             
-           alert('hello')
-        }
+
+        },
+
+        handler:function() {
+            this.add();
+            this.idCounter++;
+            console.log(this.courseInformation, this.idCounter);
+        } 
+
+
     }
     
 })
@@ -54,7 +86,7 @@ export default ({
 
         <main>
 
-            <button v-on:click="greet">ADD</button>
+            <button v-on:click="handler()">ADD</button>
             <button v-on:click="greet">UPDATE</button>
             <button v-on:click="greet">DELETE</button>
 
@@ -76,7 +108,12 @@ export default ({
                     <td>sdada</td>
                     <td>sad</td>
                     <td>ff</td>
-                    <td>ffds</td>
+                    <td>
+                        <select name="" id="">
+                        <option value="">Active</option>
+                        <option value="">Inactive</option>
+                        </select>
+                    </td>
                     <td>ffaaa</td>
                     <td>ffaaa</td>
                 </tr>
@@ -101,7 +138,7 @@ export default ({
 
             </table>
 
-            <li v-for="item in items">{{item}}</li>
+            <li v-for="info in courseInformation">{{info}}</li>
                
         </main>
 
