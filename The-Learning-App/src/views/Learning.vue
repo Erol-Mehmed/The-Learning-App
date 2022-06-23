@@ -24,48 +24,56 @@
 export default ({
     data () {
         return {
-            courseInformation: [],
-            currentCourseObject: {id: 1, courseName: '', description: '', lessons: 0, },
-            idCounter: 1,
+            courseInformationArray: [],
+            currentCourseObject: {id: 0, courseName: '', description: '', lessons: 0, image: undefined },
+            idCounter: 0
         }
     },
 
     methods: {
         add(event) {
+            this.currentCourseObject.id++;
             let isNumber = new RegExp('^[0-9]+$');
             let courseName = '';
             let description = '';
             let lessons = '';
-
+            let image = undefined;
 
             while (!courseName) {
                  courseName = prompt('Add Course Name (required field)?');
                  if (courseName !== '' && courseName !== null) {
-                    this.courseInformation.push(courseName);
+                    this.currentCourseObject.courseName = courseName;
                  } else if (courseName === null) {
                     return;
                  }
             }
 
                 description = prompt('Description?');
+                this.currentCourseObject.description = description;
 
             while (!lessons || !isNumber.test(lessons)) {
                  lessons = prompt('Add Lessons(count) (required field and must be a number)?');
                  if (lessons !== '' && lessons !== null && isNumber.test(lessons)) {
-                    this.courseInformation.push(lessons);
+                    this.currentCourseObject.lessons = lessons;
                  } else if (lessons === null) {
                     return;
                  }
             }
             
+            image = prompt('Add image url. Make sure it is valid!');
+            this.currentCourseObject.image = image;
 
-        },
+            // Going around the objects reference type
+            let object = {};
+            for (let key in this.currentCourseObject) {
+                object[key] = this.currentCourseObject[key];
+            }
 
-        handler:function() {
-            this.add();
-            this.idCounter++;
-            console.log(this.courseInformation, this.idCounter);
-        } 
+            this.courseInformationArray.push(object);
+
+        }
+
+       
 
 
     }
@@ -86,7 +94,7 @@ export default ({
 
         <main>
 
-            <button v-on:click="handler()">ADD</button>
+            <button v-on:click="add">ADD</button>
             <button v-on:click="greet">UPDATE</button>
             <button v-on:click="greet">DELETE</button>
 
@@ -94,51 +102,31 @@ export default ({
             <table>
                 
                 <tr>
-                   <th>ID</th>
-                   <th>Course Name</th>
-                   <th>Description</th>
-                   <th>Lessons(count)</th>
-                   <th>State</th>
-                   <th>Date added</th>
-                   <th>Image</th>
+                   <th class="thBorder">ID</th>
+                   <th class="thBorder">Course Name</th>
+                   <th class="thBorder">Description</th>
+                   <th class="thBorder">Lessons(count)</th>
+                   <th class="thBorder">State</th>
+                   <th class="thBorder">Date added</th>
+                   <th id="thImage">Image</th>
                 </tr>
 
-                <tr>
-                    <td>1</td>
-                    <td>sdada</td>
-                    <td>sad</td>
-                    <td>ff</td>
-                    <td>
+                <tr v-for="object in courseInformationArray">
+                    <td class="tdBorder">{{object.id}}</td>
+                    <td class="tdBorder">{{object.courseName}}</td>
+                    <td class="tdBorder">{{object.description}}</td>
+                    <td class="tdBorder">ff</td>
+                    <td class="tdBorder">
                         <select name="" id="">
                         <option value="">Active</option>
-                        <option value="">Inactive</option>
+                        <option value="">Archive</option>
                         </select>
                     </td>
-                    <td>ffaaa</td>
-                    <td>ffaaa</td>
+                    <td class="tdBorder">ffaaa</td>
+                    <td><img src="{{object.image}}" alt=""></td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>sdada</td>
-                    <td>sad</td>
-                    <td>ff</td>
-                    <td>ffds</td>
-                    <td>ffaaa</td>
-                    <td>ffaaa</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>sdada</td>
-                    <td>sad</td>
-                    <td>ff</td>
-                    <td>ffds</td>
-                    <td>ffaaa</td>
-                    <td>ffaaa</td>
-                </tr>
-
+                
             </table>
-
-            <li v-for="info in courseInformation">{{info}}</li>
                
         </main>
 
@@ -167,12 +155,16 @@ export default ({
         border: solid black 2px;
     }
 
-    th {
+    .thBorder {
         border-right: solid black 2px;
         border-bottom: solid black 2px;
     }
 
-    td {
+    #thImage {
+        border-bottom: solid black 2px;
+    }
+
+    .tdBorder {
         border-right: solid black 2px;
     }
 
