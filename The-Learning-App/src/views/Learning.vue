@@ -21,11 +21,24 @@
 
 <script>
 
-import { createApp } from "vue";
+export default ({
+    data () {
+        return {
 
-//   const vm = createApp ({
-//     alert: alert('works')
-// })
+            items: [1, 2, 5, 12, 'hello', 'hello'],
+            name: 'Erol',
+        }
+            
+    },
+
+    methods: {
+        greet(event) {
+            
+           alert('hello')
+        }
+    }
+    
+})
 
 </script>
 
@@ -35,13 +48,17 @@ import { createApp } from "vue";
         
         <header>
             <h2>Welcome</h2>
-            <img src="../components/icons/User-Icon-PNG.png" alt="">
+            <img src="../assets/User-Icon-PNG.png" alt="">
             
         </header>
 
         <main>
 
-            <button v-on:click="alert">Add</button>
+            <button v-on:click="greet">ADD</button>
+            <button v-on:click="greet">UPDATE</button>
+            <button v-on:click="greet">DELETE</button>
+
+
             <table>
                 
                 <tr>
@@ -83,6 +100,9 @@ import { createApp } from "vue";
                 </tr>
 
             </table>
+
+            <li v-for="item in items">{{item}}</li>
+               
         </main>
 
         <footer>
