@@ -23,9 +23,9 @@
 
 import { createApp } from "vue";
 
-  const vm = createApp ({
-    alert: alert('works baby')
-})
+//   const vm = createApp ({
+//     alert: alert('works baby')
+// })
 
 </script>
 
