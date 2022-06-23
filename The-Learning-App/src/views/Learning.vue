@@ -19,7 +19,15 @@
 
 
 
+<script>
 
+import { createApp } from "vue";
+
+  const vm = createApp ({
+    alert: alert('works baby')
+})
+
+</script>
 
  <template>
     
@@ -32,7 +40,10 @@
         </header>
 
         <main>
+
+            <button v-on:click="alert">Add</button>
             <table>
+                
                 <tr>
                    <th>ID</th>
                    <th>Course Name</th>
@@ -42,7 +53,35 @@
                    <th>Date added</th>
                    <th>Image</th>
                 </tr>
-             
+
+                <tr>
+                    <td>1</td>
+                    <td>sdada</td>
+                    <td>sad</td>
+                    <td>ff</td>
+                    <td>ffds</td>
+                    <td>ffaaa</td>
+                    <td>ffaaa</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>sdada</td>
+                    <td>sad</td>
+                    <td>ff</td>
+                    <td>ffds</td>
+                    <td>ffaaa</td>
+                    <td>ffaaa</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>sdada</td>
+                    <td>sad</td>
+                    <td>ff</td>
+                    <td>ffds</td>
+                    <td>ffaaa</td>
+                    <td>ffaaa</td>
+                </tr>
+
             </table>
         </main>
 
@@ -74,6 +113,10 @@
     th {
         border-right: solid black 2px;
         border-bottom: solid black 2px;
+    }
+
+    td {
+        border-right: solid black 2px;
     }
 
     table {
