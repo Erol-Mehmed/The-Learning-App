@@ -166,11 +166,17 @@ export default ({
 
             this.courseInformationArray.splice(indexOfObject, 1);
 
-            // Fixing ID numbers after deleting 
+            // Fixing ID numbers after deleting
+
             // Using objects reference and the index parameter of the method
             this.courseInformationArray.forEach((el, i) => {
                 el.id = i + 1;
             });
+
+            // Resetting the currentCourseObject to avoid wrong ID in the next addition of a course
+            if (this.courseInformationArray.length === 0) {
+                this.currentCourseObject = { id: 0, courseName: '', description: '', lessons: 0, image: undefined };
+            }
 
         }
 
@@ -322,6 +328,9 @@ header {
 
 header h2 {
     margin-left: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 img {
@@ -335,6 +344,7 @@ img {
 #tableImage {
     width: 50px;
     height: 50px;
+    
 }
 
 footer {
@@ -357,7 +367,7 @@ footer {
 }
 
 .links:hover {
-    background-color: yellow;
+    background-color: seashell;
     border-radius: 8px;
 
 }

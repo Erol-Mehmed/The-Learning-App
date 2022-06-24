@@ -95,7 +95,7 @@ footer {
 }
 
 .links:hover {
- background-color: yellow;
+ background-color: seashell;
  border-radius: 8px;
  
 }
