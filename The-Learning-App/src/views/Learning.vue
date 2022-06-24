@@ -98,7 +98,6 @@ export default ({
                     }
             }
 
-
             while (!courseName) {
                 courseName = prompt('Add Course Name (required field)?');
                 if (courseName !== '' && courseName !== null) {
@@ -138,10 +137,11 @@ export default ({
 
         },
 
-        delete1() {
+        deLete() {
 
             let indexOfObject = 0;
             let isNumber = new RegExp('^[0-9]+$');
+            let id = 0;
 
           if (this.courseInformationArray.length === 0) {
               return alert('There are no courses to update!');
@@ -165,6 +165,12 @@ export default ({
             }
 
             this.courseInformationArray.splice(indexOfObject, 1);
+
+            // Fixing ID numbers after deleting 
+            // Using objects reference and the index parameter of the method
+            this.courseInformationArray.forEach((el, i) => {
+                el.id = i + 1;
+            });
 
         }
 
@@ -191,7 +197,7 @@ export default ({
             <div id="buttonsDiv">
                 <button v-on:click="add">ADD</button>
                 <button v-on:click="update">UPDATE</button>
-                <button v-on:click="delete1">DELETE</button>
+                <button v-on:click="deLete">DELETE</button>
             </div>
 
             <table>
@@ -213,12 +219,13 @@ export default ({
                     <td class="tdBorder">{{ object.lessons }}</td>
                     <td class="tdBorder">
                         <select name="" id="">
-                            <option value="">Active</option>
+                            <option value="">Activate</option>
                             <option value="">Archive</option>
                         </select>
                     </td>
                     <td class="tdBorder">{{date}}</td>
-                    <td><img id="tableImage" :src="object.image" alt=""></td>
+                    <td v-if="object.image !== ''"><img id="tableImage" :src="object.image" alt=""></td>
+                    <td id="tableImageNoImg" v-else>No image</td>
                 </tr>
 
             </table>
