@@ -25,18 +25,18 @@ export default ({
     data() {
         return {
             courseInformationArray: [],
-            currentCourseObject: { id: 0, courseName: '', description: '', lessons: 0, image: undefined }
+            currentCourseObject: { id: 0, courseName: '', description: '', lessons: 0, image: undefined },
+            date: new Date().toDateString()
         }
     },
 
     methods: {
-        add(event) {
+        add() {
             this.currentCourseObject.id++;
             let isNumber = new RegExp('^[0-9]+$');
             let courseName = '';
             let description = '';
             let lessons = '';
-            // let image = document.createElement('img');
 
             while (!courseName) {
                 courseName = prompt('Add Course Name (required field)?');
@@ -60,23 +60,26 @@ export default ({
             }
 
             let image = prompt('Add image url. Make sure it is valid!');
-            // image.src = url;
-            // image.id = "tableImage";
+           
             this.currentCourseObject.image = image;
 
-            // Going around the objects reference type
+            // Avoiding the objects reference
             let object = {};
             for (let key in this.currentCourseObject) {
                 object[key] = this.currentCourseObject[key];
             }
 
-            // console.log(object.image);
+            console.log(object.image);
 
             this.courseInformationArray.push(object);
 
         },
 
-        update(event) {
+        update() {
+
+            if (this.courseInformationArray.length === 0) {
+                   return alert('There are no courses to update!');
+                }
 
             let isNumber = new RegExp('^[0-9]+$');
             let courseName = '';
@@ -86,12 +89,15 @@ export default ({
             let id = '';
             let updatedObject = {};
 
-            while (!isNumber.test(id)) {
-                id = prompt('Enter the ID of the course you want to update');
+            while (!isNumber.test(id) || id <= 0 || id > this.courseInformationArray.length) {
+                id = prompt('Enter the ID of the course you want to update. It must be a valid ID number. (required field)');
                 if (id === null) {
                     return;
-                }
+                } else if (id <= 0 || id > this.courseInformationArray.length) {
+                         alert('You must enter a valid ID number!');
+                    }
             }
+
 
             while (!courseName) {
                 courseName = prompt('Add Course Name (required field)?');
@@ -130,8 +136,37 @@ export default ({
 
             this.courseInformationArray.splice(indexOfObject, 1, updatedObject);
 
-        }
+        },
 
+        delete1() {
+
+            let indexOfObject = 0;
+            let isNumber = new RegExp('^[0-9]+$');
+
+          if (this.courseInformationArray.length === 0) {
+              return alert('There are no courses to update!');
+           }
+
+         while (!isNumber.test(id) || id <= 0 || id > this.courseInformationArray.length) {
+         id = prompt('Enter the ID of the course you want to update. It must be a valid ID number. (required field)');
+              if (id === null) {
+                  return;
+          } else if (id <= 0 || id > this.courseInformationArray.length) {
+               alert('You must enter a valid ID number!');
+            }
+         }
+
+         if (this.courseInformationArray.length > 1) {
+                for (let i = 0; i < this.courseInformationArray.length; i++) {
+                    if (Number(id) === this.courseInformationArray[i].id) {
+                        indexOfObject = i;
+                    }
+                }
+            }
+
+            this.courseInformationArray.splice(indexOfObject, 1);
+
+        }
 
 
 
@@ -156,7 +191,7 @@ export default ({
             <div id="buttonsDiv">
                 <button v-on:click="add">ADD</button>
                 <button v-on:click="update">UPDATE</button>
-                <button v-on:click="greet">DELETE</button>
+                <button v-on:click="delete1">DELETE</button>
             </div>
 
             <table>
@@ -171,7 +206,7 @@ export default ({
                     <th id="thImage">Image</th>
                 </tr>
 
-                <tr v-for="object in courseInformationArray">
+                <tr id="dynamicTr" v-for="object in courseInformationArray">
                     <td class="tdBorder">{{ object.id }}</td>
                     <td class="tdBorder">{{ object.courseName }}</td>
                     <td class="tdBorder">{{ object.description }}</td>
@@ -182,9 +217,8 @@ export default ({
                             <option value="">Archive</option>
                         </select>
                     </td>
-                    <td class="tdBorder">ffaaa</td>
-                    <td><img src={{object.image}} alt=""></td>
-                    <!-- <td><img src="https://avatars.mds.yandex.net/i?id=84dbd50839c3d640ebfc0de20994c30d-4473719-images-taas-consumers&n=27&h=480&w=480" alt=""></td> -->
+                    <td class="tdBorder">{{date}}</td>
+                    <td><img id="tableImage" :src="object.image" alt=""></td>
                 </tr>
 
             </table>
@@ -230,7 +264,7 @@ button {
 
 button:hover {
     background-color: darkturquoise;
-    cursor:crosshair;
+    cursor: pointer;
 }
 
 table {
@@ -238,6 +272,11 @@ table {
     font-size: 0.9rem;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+#dynamicTr td {
+   padding-top: 15px;
+}
+
 
 table,
 tr {
@@ -287,7 +326,8 @@ img {
 }
 
 #tableImage {
-    /* width: 40%; */
+    width: 50px;
+    height: 50px;
 }
 
 footer {
