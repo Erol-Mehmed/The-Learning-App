@@ -150,7 +150,7 @@ export default {
       let id = 0;
 
       if (this.courseInformationArray.length === 0) {
-        return alert("There are no courses to update!");
+        return alert("There are no courses to delete!");
       }
 
       while (
