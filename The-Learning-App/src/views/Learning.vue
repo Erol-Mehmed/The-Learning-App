@@ -32,22 +32,35 @@ export default ({
 
     methods: {
         add() {
+
+            let imageMessage = confirm('Proceed only if you have copied an image URL(if you intend to add any)!');
+
+            if (imageMessage === false) {
+                return;
+            }
+
             this.currentCourseObject.id++;
             let isNumber = new RegExp('^[0-9]+$');
             let courseName = '';
             let description = '';
             let lessons = '';
+            let image = undefined;
 
             while (!courseName) {
                 courseName = prompt('Add Course Name (required field)?');
                 if (courseName !== '' && courseName !== null) {
                     this.currentCourseObject.courseName = courseName;
                 } else if (courseName === null) {
+                    this.currentCourseObject.id--; // If the user cancels the process the increment done above must be removed
                     return;
                 }
             }
 
             description = prompt('Description?');
+            if (description === null) {
+                this.currentCourseObject.id--;
+                return;
+            }
             this.currentCourseObject.description = description;
 
             while (!lessons || !isNumber.test(lessons)) {
@@ -55,12 +68,16 @@ export default ({
                 if (lessons !== '' && lessons !== null && isNumber.test(lessons)) {
                     this.currentCourseObject.lessons = lessons;
                 } else if (lessons === null) {
+                    this.currentCourseObject.id--;
                     return;
                 }
             }
 
-            let image = prompt('Add image url. Make sure it is valid!');
-           
+             image = prompt('Add image url. Make sure it is valid!');
+             if (image === null) {
+                this.currentCourseObject.id--;
+                return;
+            }
             this.currentCourseObject.image = image;
 
             // Avoiding the objects reference
@@ -68,8 +85,6 @@ export default ({
             for (let key in this.currentCourseObject) {
                 object[key] = this.currentCourseObject[key];
             }
-
-            console.log(object.image);
 
             this.courseInformationArray.push(object);
 
