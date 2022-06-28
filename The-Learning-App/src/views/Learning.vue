@@ -159,7 +159,7 @@ export default {
         id > this.courseInformationArray.length
       ) {
         id = prompt(
-          "Enter the ID of the course you want to update. It must be a valid ID number. (required field)"
+          "Enter the ID of the course you want to delete. It must be a valid ID number. (required field)"
         );
         if (id === null) {
           return;
